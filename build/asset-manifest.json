@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/KamiDummy/3104/static/css/main.27ca76a1.css",
+    "main.js": "/KamiDummy/3104/static/js/main.1e4dc926.js",
+    "static/js/453.be69caa1.chunk.js": "/KamiDummy/3104/static/js/453.be69caa1.chunk.js",
+    "index.html": "/KamiDummy/3104/index.html",
+    "main.27ca76a1.css.map": "/KamiDummy/3104/static/css/main.27ca76a1.css.map",
+    "main.1e4dc926.js.map": "/KamiDummy/3104/static/js/main.1e4dc926.js.map",
+    "453.be69caa1.chunk.js.map": "/KamiDummy/3104/static/js/453.be69caa1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.27ca76a1.css",
+    "static/js/main.1e4dc926.js"
+  ]
+}

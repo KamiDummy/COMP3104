@@ -1,0 +1,23 @@
+# .travis.yml
+language: node_js
+node_js:
+  - "20"
+
+cache:
+  npm: true
+
+install:
+  - npm ci || npm i
+
+# If you already have a production-ready 'build/' folder and no build step, delete this script section
+script:
+  - npm run build
+
+deploy:
+  provider: pages
+  strategy: git
+  token: $GITHUB_TOKEN # <-- keep ONLY this, no literal token here
+  local_dir: build
+  keep_history: true
+  on:
+    branch: master
