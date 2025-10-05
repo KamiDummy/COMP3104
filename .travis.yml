@@ -1,4 +1,3 @@
-# .travis.yml
 language: node_js
 node_js:
   - "20"
@@ -9,15 +8,18 @@ cache:
 install:
   - npm ci || npm i
 
-# If you already have a production-ready 'build/' folder and no build step, delete this script section
 script:
   - npm run build
+
+before_deploy:
+  - echo "Build contents:" && ls -la build
 
 deploy:
   provider: pages
   strategy: git
-  token: $GITHUB_TOKEN # <-- keep ONLY this, no literal token here
+  token: $GITHUB_TOKEN
   local_dir: build
+  target_branch: gh-pages # publish into gh-pages branch
   keep_history: true
   on:
-    branch: master
+    branch: main # <— deploy when MAIN updates
