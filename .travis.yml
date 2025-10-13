@@ -4,7 +4,7 @@ node_js:
 
 branches:
   only:
-    - main              # <- use master if that's your default
+    - main # <- use master if that's your default
 
 cache:
   npm: true
@@ -18,7 +18,7 @@ before_script:
 
 script:
   - npm run build
-  - mv build/index.html build/404.html
+  - cp build/index.html build/404.html # <-- use cp, not mv
 
 deploy:
   provider: pages
