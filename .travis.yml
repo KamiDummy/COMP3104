@@ -1,30 +1,30 @@
-# .travis.yml
 language: node_js
 node_js:
-  - "20" # "stable" is fine too; 20 is current LTS on Travis images
+  - "20"
 
 branches:
   only:
-    - main # or master if that's your default
+    - main              # <- use master if that's your default
 
 cache:
-  directories:
-    - node_modules
+  npm: true
 
 install:
   - npm ci || npm i
-  - npm install -g yarn
+
+# (Safety) strip any stray NULLs from description before build
+before_script:
+  - node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('package.json','utf8'));p.description=(p.description||'').replace(/\u0000/g,'');fs.writeFileSync('package.json',JSON.stringify(p,null,2));"
 
 script:
-  # - yarn lint        # (kept as a comment like in the lab)
-  - yarn build
+  - npm run build
   - mv build/index.html build/404.html
 
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN # set in Travis repo settings (env var)
+  github_token: $GITHUB_TOKEN
   local_dir: build
   target_branch: gh-pages
   on:
-    branch: main # or master
+    branch: main
