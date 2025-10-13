@@ -2,24 +2,29 @@ language: node_js
 node_js:
   - "20"
 
+branches:
+  only:
+    - main              # <- use master if that's your default
+
 cache:
   npm: true
 
 install:
   - npm ci || npm i
 
+# (Safety) strip any stray NULLs from description before build
+before_script:
+  - node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('package.json','utf8'));p.description=(p.description||'').replace(/\u0000/g,'');fs.writeFileSync('package.json',JSON.stringify(p,null,2));"
+
 script:
   - npm run build
-
-before_deploy:
-  - echo "Build contents:" && ls -la build
+  - mv build/index.html build/404.html
 
 deploy:
   provider: pages
-  strategy: git
-  token: $GITHUB_TOKEN
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
   local_dir: build
-  target_branch: gh-pages # publish into gh-pages branch
-  keep_history: true
+  target_branch: gh-pages
   on:
-    branch: main # <— deploy when MAIN updates
+    branch: main
